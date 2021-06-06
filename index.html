@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            background-image: url(./background.gif);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: bottom;
+            font-family: 'Sigmar One', '微軟正黑體';
+        }
+
+        .cursorX {
+            cursor: url(./cursor_x.png) 5 5, auto;
+        }
+
+        .cursorZ {
+            cursor: url(./cursor_z.png) 5 5, auto;
+        }
+
+        #game {
+            width: 600px;
+            position: absolute;
+            top: 52%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0;
+        }
+
+        .role {
+            position: relative;
+            width: 120px;
+            height: 180px;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            margin: 20px 40px;
+            display: inline-block;
+            font-size: 1rem;
+        }
+
+        .role:nth-child(3n) {
+            margin-right: 40px;
+        }
+
+        .role:nth-child(3n-2) {
+            margin-left: 40px;
+        }
+
+        .seat {
+            width: 158px;
+            height: 112px;
+            background-image: url(./table.png);
+            background-repeat: no-repeat;
+            background-size: 70% 70%;
+            position: absolute;
+            top: 60%;
+            right: 20%;
+        }
+
+        .rice {
+            width: 100px;
+            height: 60px;
+            background-repeat: no-repeat;
+            background-size: 80% 80%;
+            position: absolute;
+            top: 55%;
+            left: -38%;
+        }
+
+        .want {
+            width: 60px;
+            height: 60px;
+            background-image: url(./want.png);
+            background-repeat: no-repeat;
+            background-size: 50px 50px;
+            position: absolute;
+            top: 10%;
+            left: 90%;
+        }
+
+        .food1 {
+            width: 50px;
+            height: 50px;
+            background-image: url(./food1.png);
+            background-repeat: no-repeat;
+            background-size: 80% 80%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .food2 {
+            width: 50px;
+            height: 50px;
+            background-image: url(./food2.png);
+            background-repeat: no-repeat;
+            background-size: 80% 80%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #top {
+            position: absolute;
+            left: 50%;
+            top: 10px;
+            transform: translateX(-50%);
+        }
+
+        #btn-start {
+            position: absolute;
+            right: 100px;
+            width: 120px;
+            height: 30px;
+            font-size: 20px;
+            font-family: 'Sigmar One', cursive;
+            background: rgb(67, 175, 57);
+            color: rgb(255, 238, 0);
+            border: none;
+            box-shadow:
+                0 0 0px 2px rgba(14, 112, 5, 0.774),
+                0 0 0px 2px rgba(76, 199, 65, 0.445);
+            border-radius: 10px 10px;
+            line-height: 30px;
+        }
+
+        #btn-start:hover {
+            background: rgb(56, 146, 47);
+            color: rgba(0, 0, 0, 0.582);
+            box-shadow:
+                0 0 0px 2px rgb(24, 104, 0),
+                0 0 0px 2px rgb(255, 230, 0),
+                inset 20px 20px 60px rgba(14, 112, 5, 0.774),
+                inset -20px -20px 60px rgba(76, 199, 65, 0.445);
+        }
+
+        #top {
+            position: absolute;
+            width: 600px;
+        }
+
+        p {
+            position: absolute;
+            right: -20%;
+            top: 20%;
+            color: red;
+            font-size: 30px;
+        }
+
+        #txtTop {
+            position: absolute;
+            font-size: 30px;
+            color: black;
+            line-height: 1;
+        }
+
+        #textScore {
+            position: absolute;
+            right: -12s0px;
+        }
+
+        #time {
+            position: absolute;
+            left: 180px;
+        }
+
+        .order {
+            position: absolute;
+        }
+
+        .no1 {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+        }
+
+        #textHighscorePlayer,
+        #textHighscore {
+            font-size: 1rem;
+        }
+
+        #txt {
+            position: absolute;
+            left: 50px;
+            top: 10px;
+        }
+    </style>
+</head>
+
+<body class="cursorZ">
+    <div id="container">
+        <div id="content">
+            <div id="top">
+                <input type="button" value="Start" id="btn-start">
+                <div id="txtTop">
+                    <span id="textScore">Score:0</span>
+                    <span id="time">Time:30</span>
+                </div>
+            </div>
+            <div id="record">
+                <img class="no1" src="./no1.png">
+                <div id="txt">
+                    <span class="text" id="textHighscorePlayer">-</span>
+                    <br>
+                    <span class="text" id="textHighscore">-</span>
+                </div>
+            </div>
+        </div>
+        <div id="game">
+            <div class="role">
+                <div class="seat"></div>
+                <div class="order">
+                    <div class="food"></div>
+                </div>
+                <p></p>
+                <div class="rice"></div>
+            </div>
+            <div class="role">
+                <div class="seat"></div>
+                <div class="order">
+                    <div class="food"></div>
+                </div>
+                <p></p>
+                <div class="rice"></div>
+            </div>
+            <div class="role">
+                <div class="seat"></div>
+                <div class="order">
+                    <div class="food"></div>
+                </div>
+                <p></p>
+                <div class="rice"></div>
+            </div>
+            <div class="role">
+                <div class="seat"></div>
+                <div class="order">
+                    <div class="food"></div>
+                </div>
+                <p></p>
+                <div class="rice"></div>
+            </div>
+            <div class="role">
+                <div class="seat"></div>
+                <div class="order">
+                    <div class="food"></div>
+                </div>
+                <p></p>
+                <div class="rice"></div>
+            </div>
+            <div class="role">
+                <div class="seat"></div>
+                <div class="order">
+                    <div class="food"></div>
+                </div>
+                <p></p>
+                <div class="rice"></div>
+            </div>
+            <div class="role">
+                <div class="seat"></div>
+                <div class="order">
+                    <div class="food"></div>
+                </div>
+                <p></p>
+                <div class="rice"></div>
+            </div>
+            <div class="role">
+                <div class="seat"></div>
+                <div class="order">
+                    <div class="food"></div>
+                </div>
+                <p></p>
+                <div class="rice"></div>
+            </div>
+            <div class="role">
+                <div class="seat"></div>
+                <div class="order">
+                    <div class="food"></div>
+                </div>
+                <p></p>
+                <div class="rice"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const roles = document.getElementsByClassName('role')
+        const seats = document.getElementsByClassName('seat')
+        const orders = document.getElementsByClassName('order')
+        const foods = document.getElementsByClassName('food')
+        const start = document.getElementById('btn-start')
+        const textScore = document.getElementById('textScore')
+        const time = document.getElementById('time')
+        const p = document.getElementsByTagName('p')
+        const rice = document.getElementsByClassName('rice')
+        const body = document.getElementsByTagName('body')[0]
+        const textHighscorePlayer = document.getElementById('textHighscorePlayer')
+        const textHighscore = document.getElementById('textHighscore')
+        const game = document.getElementById('game')
+        const rand = (min, max) => {
+            return Math.round(Math.random() * (max - min)) + min
+        }
+
+        Swal.fire({
+            title: '說明',
+            text: '用「z鍵及x鍵」切換游標圖式，點擊動物們想點的餐點，給對餐點 +1 分，給錯餐點 -1 分。',
+            imageUrl: 'https://github.com/dear17530/click-game/blob/main/keyboard.gif?raw=true',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: '用「z鍵及x鍵」切換游標圖式，點擊動物們想點的餐點，給對餐點 +1 分，給錯餐點 -1 分。',
+        })
+
+        let score = 0
+        let countdown = 30
+        let highscore = { name: '', score: 0 }
+        const highStorage = JSON.parse(localStorage.getItem('wam'))
+        if (highStorage !== null) {
+            highscore = highStorage
+            textHighscorePlayer.innerText = `　Name:${highscore.name}`
+            textHighscore.innerText = `　Score:${highscore.score}`
+        }
+        start.onclick = () => {
+            start.disabled = true
+            score = 0
+            countdown = 30
+            textScore.innerText = `Score:${score}`
+            time.innerText = `Time:${countdown}`
+            timer = setInterval(gameStart, 1000)
+            gameStart()
+        }
+
+
+        let data = []
+
+        const gameStart = () => {
+            for (let i = 0; i < 3; i++) {
+                const x = rand(0, 8)
+                const y = rand(1, 2)
+                const r = rand(0, 2)
+                if (roles[x].style.backgroundImage == '' && p[x].innerText === '') {
+                    data.push({ hole: x, role: r, dish: y })
+                    roles[x].style.backgroundImage = `url(./role${r}.png)`
+                    if (p[x].innerText === '') {
+                        orders[x].classList.add('want')
+                        if (!foods[x].classList.contains('food1') && !foods[x].classList.contains('food2')) {
+                            foods[x].classList.add(`food${y}`)
+                        }
+                    }
+                }
+            }
+
+            countdown--
+            time.innerText = `Time:${countdown}`
+            if (countdown <= 0) {
+                data = []
+                clearInterval(timer)
+                start.disabled = false
+                for (let i = 0; i < 9; i++) {
+                    roles[i].style.backgroundImage = ''
+                    orders[i].classList.remove('want')
+                    foods[i].classList.remove('food1')
+                    foods[i].classList.remove('food2')
+                    p[i].innerText = ''
+                }
+                if (score > highscore.score) {
+                    Swal.fire({
+                        title: `你得到${score}分`,
+                        input: 'text',
+                        inputLabel: '你的名字',
+                        inputPlaceholder: '請輸入你的名字',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    }).then(function (result) {
+                        if (result.value == null) {
+                            highscore.name = 'nobody'
+                        } else {
+                            highscore.name = result.value
+                        }
+                        highscore.score = score
+                        textHighscorePlayer.innerText = '　NAME:' + highscore.name
+                        textHighscore.innerText = '　SCORE:' + highscore.score
+                        localStorage.setItem('wam', JSON.stringify(highscore))
+                    })
+                } else {
+                    Swal.fire({
+                        title: '恭喜過關',
+                        text: `你得到${score}分`,
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    })
+                }
+            }
+        }
+
+        window.onload = function () {
+            for (let i = 0; i < 9; i++) {
+                foods[i].onclick = () => {
+                    if (foods[i].classList.contains('food1') && body.classList.contains('cursorX')) {
+                        score++
+                        orders[i].classList.remove('want')
+                        foods[i].classList.remove('food1')
+                        p[i].innerText = '+1'
+                        function isrole(r) { return r.hole == i }
+                        roles[i].style.backgroundImage = `url(./role${data.find(isrole).role}-1.png)`
+                        rice[i].style.backgroundImage = `url(./food${data.find(isrole).dish}.png)`
+                        data.splice(data.indexOf(data.find(isrole)), 1)
+                    }
+                    else if (foods[i].classList.contains('food2') && body.classList.contains('cursorZ')) {
+                        score++
+                        orders[i].classList.remove('want')
+                        foods[i].classList.remove('food2')
+                        p[i].innerText = '+1'
+                        function isrole(r) { return r.hole == i }
+                        roles[i].style.backgroundImage = `url(./role${data.find(isrole).role}-1.png)`
+                        rice[i].style.backgroundImage = `url(./food${data.find(isrole).dish}.png)`
+                        data.splice(data.indexOf(data.find(isrole)), 1)
+                    } else {
+                        score--
+                        return p[i].innerText = '-1'
+                    }
+                    textScore.innerText = `Score:${score}`
+                    clearTime = setTimeout(clearText, 1000)
+                }
+
+                const clearText = () => {
+                    p[i].innerText = ''
+                    roles[i].style.backgroundImage = ''
+                    rice[i].style.backgroundImage = ''
+                }
+            }
+        }
+
+        document.onkeydown = (event) => {
+            if (event.key == 'z' || event.key == 'Z') {
+                body.classList.add('cursorZ')
+                body.classList.remove('cursorX')
+            }
+            if (event.key == 'x' || event.key == 'X') {
+                body.classList.add('cursorX')
+                body.classList.remove('cursorZ')
+            }
+        }
+    </script>
+</body>
+
+</html>
